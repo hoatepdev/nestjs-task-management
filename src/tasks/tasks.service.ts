@@ -29,11 +29,9 @@ export class TasksService {
     task.title = title;
     task.description = description;
     task.status = TaskStatus.OPEN;
-    // const t = await this.taskRepository.create(task);
 
-    const temp = await this.taskRepository.save(task);
-    console.log(temp);
-    return task;
+    const result = await this.taskRepository.save(task);
+    return result;
   }
 
   async getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
