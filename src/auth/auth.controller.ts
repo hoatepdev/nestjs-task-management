@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
-import { User } from './auth.entity';
+import { User } from './user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './get-user-decorator';
 
