@@ -1,9 +1,10 @@
-import { GetUser } from './../auth/get-user-decorator';
+import { GetUser } from '../auth/get-user-decorator';
 import {
   Body,
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   ParseIntPipe,
   Patch,
@@ -25,6 +26,7 @@ import { User } from 'src/auth/user.entity';
 @Controller('tasks')
 @UseGuards(AuthGuard())
 export class TasksController {
+  private logger = new Logger('Task controller');
   constructor(private taskService: TasksService) {}
 
   @Get()
@@ -32,6 +34,11 @@ export class TasksController {
     @Query(ValidationPipe) filterDto: GetTasksFilterDto,
     @GetUser() user: User,
   ): Promise<Task[]> {
+    this.logger.verbose(
+      `User ${user.username} retrieving all tasks. Filter ${JSON.stringify(
+        filterDto,
+      )}`,
+    );
     return this.taskService.getTasks(filterDto, user);
   }
 
@@ -49,6 +56,11 @@ export class TasksController {
     @Body() createTaskDto: CreateTaskDto,
     @GetUser() user: User,
   ): Promise<Task> {
+    this.logger.verbose(
+      `User ${user.username} creating a new task. Data ${JSON.stringify(
+        createTaskDto,
+      )}`,
+    );
     return this.taskService.createTask(createTaskDto, user);
   }
 
